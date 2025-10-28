@@ -1,0 +1,6 @@
+# Act configuration file
+# Each option should be on its own line
+
+-P windows-latest=ghcr.io/catthehacker/ubuntu:runner-latest
+--container-architecture linux/amd64
+--reuse
