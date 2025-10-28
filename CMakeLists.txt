@@ -24,7 +24,13 @@ set(CURL_DISABLE_LDAPS ON CACHE BOOL "Disable LDAPS" FORCE)
 set(CURL_USE_LIBPSL OFF CACHE BOOL "Disable libpsl" FORCE)
 set(CURL_USE_LIBIDN2 OFF CACHE BOOL "Disable libidn2" FORCE)
 set(CURL_ENABLE_SSL ON CACHE BOOL "Enable SSL" FORCE)
-set(CURL_USE_SCHANNEL ON CACHE BOOL "Use Windows Schannel for SSL" FORCE)
+
+# Use platform-specific SSL backend
+if(WIN32)
+    set(CURL_USE_SCHANNEL ON CACHE BOOL "Use Windows Schannel for SSL" FORCE)
+else()
+    set(CURL_USE_OPENSSL ON CACHE BOOL "Use OpenSSL for SSL" FORCE)
+endif()
 
 add_subdirectory(${THIRDPARTY_DIR}/curl)
 
@@ -38,7 +44,9 @@ set(WEBVIEW_BUILD_DOCS OFF CACHE BOOL "Disable webview docs" FORCE)
 add_subdirectory(${THIRDPARTY_DIR}/webview)
 
 # JSON
-set(NLOHMANN_JSON_BUILD_MODULES ON CACHE BOOL "Build C++ modules support" FORCE)
-add_subdirectory(${THIRDPARTY_DIR}/json)
+set(JSON_BuildTests OFF CACHE INTERNAL "")
+set(JSON_Install OFF CACHE INTERNAL "")
+set(JSON_MultipleHeaders OFF CACHE INTERNAL "")
+add_subdirectory(${THIRDPARTY_DIR}/json EXCLUDE_FROM_ALL)
 
 add_subdirectory(smartweatherapp)
