@@ -10,6 +10,7 @@
 #include <chrono>
 #include <fstream>
 #include <sstream>
+#include <istream>
 #include <filesystem>
 #include <map>
 
@@ -35,6 +36,32 @@
  *  https://api.openweathermap.org/data/3.0/onecall/overview?lat={lat}&lon={lon}&appid={API key}
  */
 
+inline std::string ReadAPIKey(const std::string &filePath, const std::string &keyName)
+{
+    std::ifstream apiKeyFile(filePath);
+    if (!apiKeyFile)
+    {
+        std::cerr << "Failed to open API key file." << std::endl;
+        return "";
+    }
+
+    std::string line;
+    while (std::getline(apiKeyFile, line))
+    {
+        std::istringstream lineStream(line);
+        std::string key, value;
+        if (std::getline(lineStream, key, '=') && std::getline(lineStream, value))
+        {
+            if (key == keyName)
+            {
+                return value;
+            }
+        }
+    }
+
+    return "";
+}
+
 inline std::string GetReactDevUrl()
 {
     return "http://localhost:5173";
@@ -54,13 +81,18 @@ int main(int argc, char **argv)
 #endif
 {
     try {
-        // Configure WebView2 to allow file:// access and disable web security for local development
+        // Configure WebView to allow file:// access and disable web security for local development
         // This allows ES modules and CORS requests from file:// protocol
 #ifdef _WIN32
         SetEnvironmentVariableW(
             L"WEBVIEW2_ADDITIONAL_BROWSER_ARGUMENTS",
             L"--allow-file-access-from-files --disable-web-security --allow-file-access --disable-features=CrossOriginOpenerPolicy"
         );
+#elif defined(__linux__)
+        // On Linux, WebKitGTK uses environment variables for webkit settings
+        setenv("WEBKIT_DISABLE_COMPOSITING_MODE", "1", 1);
+        // Note: WebKitGTK has different security policies than Chromium-based WebView2
+        // File access and CORS are handled differently
 #endif
         smartweather::FileWatcher fileWatcher;
         
@@ -76,14 +108,7 @@ int main(int argc, char **argv)
         // Weather API function
         auto GetWeatherData = [&]() -> std::string
         {
-            char *apiKeyEnv;
-            _dupenv_s(&apiKeyEnv, nullptr, "OPENWEATHER_API_KEY");
-            if (!apiKeyEnv)
-            {
-                return R"({"error": "API key not found. Please set the OPENWEATHER_API_KEY environment variable."})";
-            }
-
-            const std::string apiKey = apiKeyEnv;
+            const std::string apiKey = ReadAPIKey(".secrets", "OPENWEATHER_API_KEY");
             const std::string lat = "-6.2146";
             const std::string lon = "106.8451";
             std::string lang = "id";
@@ -130,7 +155,7 @@ int main(int argc, char **argv)
         std::cout << "Current working directory: " << std::filesystem::current_path().string() << std::endl;
         std::cout << "Looking for React build at: " << reactDistPath.string() << std::endl;
 
-        if (std::filesystem::exists(reactDistPath))
+        if (false && std::filesystem::exists(reactDistPath))
         {
             // Use React production build
             std::cout << "Using React production build from: " << reactDistPath.string() << std::endl;
