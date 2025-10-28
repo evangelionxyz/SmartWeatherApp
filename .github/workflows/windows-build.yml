@@ -26,7 +26,7 @@ jobs:
       with:
         node-version: '20'
         cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
+        cache-dependency-path: smartweatherapp/frontend/package-lock.json
     
     - name: Setup MSVC
       uses: microsoft/setup-msbuild@v2
@@ -35,11 +35,11 @@ jobs:
       uses: lukka/get-cmake@latest
     
     - name: Install frontend dependencies
-      working-directory: frontend
+      working-directory: smartweatherapp/frontend
       run: npm ci
     
     - name: Build frontend
-      working-directory: frontend
+      working-directory: smartweatherapp/frontend
       run: npm run build
     
     - name: Configure CMake
@@ -56,7 +56,7 @@ jobs:
     - name: Copy frontend dist to build output
       run: |
         New-Item -ItemType Directory -Force -Path "build\bin\${{ env.BUILD_TYPE }}\smartweatherapp"
-        Copy-Item -Path "frontend\dist" -Destination "build\bin\${{ env.BUILD_TYPE }}\smartweatherapp\dist" -Recurse -Force
+        Copy-Item -Path "smartweatherapp\frontend\dist" -Destination "build\bin\${{ env.BUILD_TYPE }}\smartweatherapp\dist" -Recurse -Force
     
     - name: Test executable exists
       run: |
