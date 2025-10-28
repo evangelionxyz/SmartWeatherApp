@@ -1,0 +1,9 @@
+[submodule "thirdparty/curl"]
+	path = thirdparty/curl
+	url = https://github.com/curl/curl.git
+[submodule "thirdparty/json"]
+	path = thirdparty/json
+	url = https://github.com/nlohmann/json.git
+[submodule "thirdparty/webview"]
+	path = thirdparty/webview
+	url = https://github.com/webview/webview.git
