@@ -6,3 +6,5 @@ build/
 
 # Act runner cache
 .act/
+smartweatherapp/frontend/src/config/firebase.ts
+smartweatherapp/frontend/src/config/openWeather.ts

@@ -1,225 +1,116 @@
-/* WeatherApp Component Styles */
+/* Weather App - Monochrome Theme */
+
 .weather-app {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    min-height: 100%;
 }
 
-.counter-section, .weather-section {
-  background: rgba(255, 255, 255, 0.95);
-  border-radius: 12px;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+.weather-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
 }
 
-.counter-section h2, .weather-section h2 {
-  margin: 0 0 20px 0;
-  color: #333;
-  text-align: center;
-  font-size: 1.5rem;
+.weather-header h2 {
+    color: var(--text-primary);
+    margin: 0;
+    font-size: 24px;
 }
 
-/* Counter Styles */
-.counter-controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
-
-.counter-display {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #2563eb;
-  min-width: 60px;
-  text-align: center;
-}
-
-/* Button Styles */
-.btn {
-  padding: 12px 24px;
-  border: none;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  min-width: 44px;
-}
-
-.btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.btn:active {
-  transform: translateY(0);
-}
-
-.btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.btn-primary {
-  background: #2563eb;
-  color: white;
-}
-
-.btn-success {
-  background: #16a34a;
-  color: white;
-}
-
-.btn-danger {
-  background: #dc2626;
-  color: white;
-}
-
-/* Weather Styles */
-.weather-controls {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.weather-display {
-  background: #f8fafc;
-  border-radius: 8px;
-  padding: 20px;
-  border-left: 4px solid #2563eb;
-}
-
-.weather-display h3 {
-  margin: 0 0 16px 0;
-  color: #2563eb;
-  font-size: 1.25rem;
-}
-
-.weather-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 12px;
-}
-
-.weather-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: white;
-  padding: 12px 16px;
-  border-radius: 6px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.weather-item.full-width {
-  grid-column: 1 / -1;
-}
-
-.weather-item .label {
-  font-weight: 500;
-  color: #64748b;
-}
-
-.weather-item .value {
-  font-weight: 600;
-  color: #0f172a;
-}
-
-/* Error Styles */
-.error-message {
-  background: #fef2f2;
-  border: 1px solid #fecaca;
-  border-radius: 8px;
-  padding: 16px;
-  margin: 16px 0;
-}
-
-.error-message h3 {
-  margin: 0 0 8px 0;
-  color: #dc2626;
-  font-size: 1.1rem;
-}
-
-.error-message p {
-  margin: 0;
-  color: #7f1d1d;
-}
-
-/* Development Info */
-.dev-info {
-  background: linear-gradient(135deg, #fef3c7, #fde68a);
-  border: 1px solid #f59e0b;
-  border-radius: 8px;
-  padding: 16px;
-  margin-top: 20px;
-}
-
-.dev-info h3 {
-  margin: 0 0 8px 0;
-  color: #92400e;
-  font-size: 1.1rem;
-}
-
-.dev-info p {
-  margin: 0;
-  color: #78350f;
-  line-height: 1.5;
-}
-
-/* Separator */
-hr {
-  border: none;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
-  margin: 20px 0;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .weather-app {
-    padding: 10px;
-  }
-  
-  .counter-section, .weather-section {
-    padding: 16px;
-  }
-  
-  .weather-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .counter-controls {
-    gap: 15px;
-  }
-  
-  .counter-display {
-    font-size: 1.5rem;
-  }
-  
-  .btn {
+.signout-button {
     padding: 10px 20px;
-    font-size: 0.9rem;
-  }
+    background: var(--accent);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-/* Loading Animation */
-.btn:disabled.loading::after {
-  content: "";
-  width: 16px;
-  height: 16px;
-  margin-left: 8px;
-  border: 2px solid transparent;
-  border-top: 2px solid currentColor;
-  border-radius: 50%;
-  display: inline-block;
-  animation: spin 1s linear infinite;
+.signout-button:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px var(--shadow-hover);
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.weather-content {
+    background: var(--bg-secondary);
+    padding: 8px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px var(--shadow);
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.fetch-weather-btn {
+    padding: 14px 28px;
+    background: var(--accent);
+    color: var(--bg-primary);
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.fetch-weather-btn:hover:not(:disabled) {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px var(--shadow-hover);
+}
+
+.fetch-weather-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.error-message {
+    background: #e74c3c;
+    color: white;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.weather-info {
+    background: var(--bg-primary);
+    padding: 12px;
+    border-radius: 6px;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.weather-info h3 {
+    color: var(--text-primary);
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 20px;
+}
+
+.weather-info p {
+    color: var(--text-secondary);
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+@media (max-width: 640px) {
+    .weather-header {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .weather-header h2 {
+        font-size: 20px;
+    }
 }

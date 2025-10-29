@@ -1,4 +1,37 @@
-/* Smart Weather App Main Styles */
+/* Smart Weather App Main Styles - Monochrome Theme */
+
+/* Light Mode Colors */
+:root[data-theme="light"] {
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
+  --bg-secondary-alpha: rgba(245, 245, 245, 0.95);
+  --bg-tertiary: #e5e5e5;
+  --text-primary: #1a1a1a;
+  --text-secondary: #4a4a4a;
+  --text-tertiary: #767676;
+  --border-color: #d0d0d0;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --shadow-hover: rgba(0, 0, 0, 0.15);
+  --accent: #2a2a2a;
+  --accent-hover: #000000;
+}
+
+/* Dark Mode Colors */
+:root[data-theme="dark"] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2a2a2a;
+  --bg-secondary-alpha: rgba(42, 42, 42, 0.95);
+  --bg-tertiary: #3a3a3a;
+  --text-primary: #f5f5f5;
+  --text-secondary: #d0d0d0;
+  --text-tertiary: #a0a0a0;
+  --border-color: #404040;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-hover: rgba(0, 0, 0, 0.4);
+  --accent: #e5e5e5;
+  --accent-hover: #ffffff;
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -7,60 +40,41 @@
 
 html, body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #242424;
-  min-height: 100vh;
-  min-width: 100vw;
-  color: #333;
+  background: var(--bg-primary);
+  height: 100%;
+  width: 100%;
+  color: var(--text-primary);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
 }
 
 .app {
   min-height: 100vh;
-  min-width: 100vw;
+  width: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.app-header {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  padding: 20px;
-  text-align: center;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.app-header h1 {
-  color: white;
-  font-size: 2.0rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  margin: 0;
-}
-
-.mode-indicator {
-  color: white;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  font-weight: 500;
-  backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: var(--bg-primary);
 }
 
 .app-main {
   flex: 1;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .app-footer {
-  background: rgba(0, 0, 0, 0.1);
-  color: rgba(255, 255, 255, 0.8);
   text-align: center;
   padding: 15px;
   font-size: 0.9rem;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-top: 1px solid var(--border-color);
+  transition: all 0.3s ease;
 }
 
 /* Responsive Design */
@@ -86,14 +100,14 @@ html, body {
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-tertiary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--border-color);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--text-tertiary);
 }

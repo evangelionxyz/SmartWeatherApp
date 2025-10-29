@@ -42,6 +42,7 @@ set(WEBVIEW_BUILD_TESTS OFF CACHE BOOL "Disable webview tests" FORCE)
 set(WEBVIEW_BUILD_EXAMPLES OFF CACHE BOOL "Disable webview examples" FORCE)
 set(WEBVIEW_BUILD_DOCS OFF CACHE BOOL "Disable webview docs" FORCE)
 add_subdirectory(${THIRDPARTY_DIR}/webview)
+target_compile_definitions(webview_core_static PRIVATE _SILENCE_ALL_CXX23_DEPRECATION_WARNINGS _CXX23_DEPRECATE_ALIGNED_STORAGE)
 
 # JSON
 set(JSON_BuildTests OFF CACHE INTERNAL "")

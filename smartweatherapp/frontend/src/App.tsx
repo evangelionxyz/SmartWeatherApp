@@ -1,62 +1,44 @@
-import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
+import { ThemeProvider } from './context/ThemeContext'
+import ProtectedRoute from './components/ProtectedRoute'
+import WeatherApp from './pages/WeatherApp'
+import AuthBoarding from './pages/AuthBoarding'
+import Header from './pages/Header'
 import './styles/App.css'
-import WeatherApp from './components/WeatherApp'
-
-// Declare window interface for C++ bindings
-declare global {
-  interface Window {
-    count: (direction: number) => Promise<string>;
-    getWeather: () => Promise<string>;
-    checkFileChanges: () => Promise<string>;
-  }
-}
+import { UserConfigProvider } from './context/UserContext'
 
 function App() {
-  const [isNative, setIsNative] = useState(false);
-
-  useEffect(() => {
-    // Check if we're running in the C++ webview (native mode)
-    const checkNativeMode = () => {
-      console.log('Checking for native bindings...');
-      console.log('window.getWeather:', typeof window.getWeather);
-      console.log('window.checkFileChanges:', typeof window.checkFileChanges);
-      console.log('window.count:', typeof window.count);
-      
-      // Check for any of the C++ bindings
-      if (typeof window.getWeather === 'function' || typeof window.checkFileChanges === 'function') {
-        setIsNative(true);
-        console.log('Running in native C++ webview mode');
-      } else {
-        setIsNative(false);
-        console.log('Running in web development mode');
-      }
-    };
-
-    checkNativeMode();
-    
-    // Retry check after a short delay in case bindings load later
-    const timeout = setTimeout(checkNativeMode, 100);
-    
-    return () => clearTimeout(timeout);
-  }, []);
-
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1>Smart Weather App</h1>
-        <span className="mode-indicator">
-          Mode: {isNative ? '🖥️ Native' : '🌐 Web'}
-        </span>
-      </header>
-      
-      <main className="app-main">
-        <WeatherApp isNative={isNative} />
-      </main>
-      
-      <footer className="app-footer">
-        <p>Built with React | C++ WebView</p>
-      </footer>
-    </div>
+    <ThemeProvider>
+      <AuthProvider>
+        <UserConfigProvider>
+          <Router>
+            <div className="app">
+              <Header/>
+              <main className="app-main">
+                <Routes>
+                  <Route path="/auth" element={<AuthBoarding />} />
+                  <Route 
+                    path="/" 
+                    element={
+                      <ProtectedRoute>
+                        <WeatherApp/>
+                      </ProtectedRoute>
+                    } 
+                  />
+                  <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+              </main>
+              
+              <footer className="app-footer">
+                <p>Built with React | C++ WebView</p>
+              </footer>
+            </div>
+          </Router>
+        </UserConfigProvider>
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
 
