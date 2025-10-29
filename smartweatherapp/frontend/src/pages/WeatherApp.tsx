@@ -1,73 +1,63 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
-import '../styles/WeatherApp.css';
 import CardContainer from '../components/CardContainer';
 import { useUserConfig } from '../context/UserContext';
-
-interface WeatherData {
-  current?: {
-    temp: number;
-    feels_like: number;
-    humidity: number;
-    pressure: number;
-    uvi: number;
-    visibility: number;
-    weather: Array<{
-      description: string;
-      main: string;
-      icon: string;
-    }>;
-  };
-  error?: string;
-}
+import { useWeather } from '../context/WeatherContext';
+import '../styles/WeatherApp.css';
+import '../styles/App.css';
 
 const WeatherApp: React.FC = () => {
-  const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const { currentUser } = useAuth();
   const { config: userConfig } = useUserConfig();
+  const { weatherData, loading, error, fetchWeather, requestLocationPermission, coordinates } = useWeather();
+  const hasFetchedRef = useRef(false);
+  const hasRequestedLocationRef = useRef(false);
 
-  // Weather functions
-  const fetchWeather = async () => {
-    setLoading(true);
-    setError(null);
-    
-    try {
-      let config = userConfig;
-
-      let weatherCall: string = `https://api.openweathermap.org/data/3.0/onecall?lat=-6.2146&lon=106.8451&units=${config?.preferedUnits}&lang=${config?.preferedLanguage}&appid=893bab7ae25756bc9c80791010ec76bd`;
-      let weatherResponse: string = "";
-
-      const response = await fetch(weatherCall);
-      weatherResponse = await response.text();
-      const data: WeatherData = JSON.parse(weatherResponse);
-      
-      if (data.error) {
-        setError(data.error);
-        setWeatherData(null);
-      } else {
-        setWeatherData(data);
-        setError(null);
+  // Request location permission on mount
+  useEffect(() => {
+    const getLocation = async () => {
+      if (!hasRequestedLocationRef.current) {
+        hasRequestedLocationRef.current = true;
+        await requestLocationPermission();
       }
-      
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to fetch weather data';
-      setError(errorMessage);
-      setWeatherData(null);
-    } finally {
-      setLoading(false);
+    };
+    getLocation();
+  }, [requestLocationPermission]);
+
+  // Fetch weather when user config or coordinates are available
+  useEffect(() => {
+    if (!userConfig) return;
+
+    if (!hasFetchedRef.current) {
+      // Fetch with user's location if available
+      fetchWeather(userConfig.preferredUnits, coordinates || undefined);
+      hasFetchedRef.current = true;
+    }
+
+    const intervalId = setInterval(() => {
+      fetchWeather(userConfig.preferredUnits, coordinates || undefined);
+    }, 5 * 60 * 1000);
+
+    return () => clearInterval(intervalId);
+  }, [userConfig, fetchWeather, coordinates]);
+
+  const handleLocationRequest = async () => {
+    const coords = await requestLocationPermission();
+    if (coords && userConfig) {
+      // Fetch weather immediately with new coordinates
+      await fetchWeather(userConfig.preferredUnits, coords);
     }
   };
-
-  useEffect(() => {
-    fetchWeather();
-  }, []);
 
   return (
     <div className="weather-app">
       <div className="weather-header">
         <h2>Welcome, {currentUser?.displayName || 'User'}!</h2>
+        {!coordinates && (
+          <button onClick={handleLocationRequest} className="app-button">
+            Enable Location
+          </button>
+        )}
       </div>
 
       <div className="weather-content">

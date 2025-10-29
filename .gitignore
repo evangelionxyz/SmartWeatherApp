@@ -1,10 +1,5 @@
 build/
 
-# GitHub Actions local testing
 .secrets
 .env
-
-# Act runner cache
 .act/
-smartweatherapp/frontend/src/config/firebase.ts
-smartweatherapp/frontend/src/config/openWeather.ts

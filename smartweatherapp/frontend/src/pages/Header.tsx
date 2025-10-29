@@ -1,46 +1,48 @@
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
-
+import { useEffect, useRef, useState } from 'react';
+import { getOrCreateUserConfig, storeUserConfig, useUserConfig, type UserConfig } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Header.css';
-import { useEffect, useState } from 'react';
-import { getOrCreateUserConfig, useUserConfig } from '../context/UserContext';
+import '../styles/App.css';
 
 const Header: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
   const { currentUser } = useAuth();
-  const [isUserMenuOpen, setUserMenuOpen] = useState(false);
   const { config: userConfig, updateUserConfig } = useUserConfig();
-
-  const onLanguageChange = async () => {
-    if (!userConfig) return;
-    try {
-      const newLanguage = userConfig.preferedLanguage === 'en' ? 'id' : 'en';
-      await updateUserConfig({ preferedLanguage: newLanguage });
-      console.log(userConfig);
-    } catch (err) {
-      console.error('Failed to update language preference', err);
-    }
-  }
+  const [isUserMenuOpen, setUserMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const currentConfig = useRef<UserConfig | null>(null);
 
   useEffect(() => {
     if (!currentUser) return;
-    let mounted = true;
+    if (currentConfig.current?.preferredLanguage == userConfig?.preferredLanguage) return;
+    if (currentConfig.current?.preferredUnits == userConfig?.preferredUnits) return;
 
     const loadUserConfig = async () => {
       try {
-        const c = await getOrCreateUserConfig(currentUser.email!);
-        if (mounted && c) updateUserConfig(c);
+        currentConfig.current = await getOrCreateUserConfig(currentUser?.email!);
+        updateUserConfig(currentConfig.current);
       } catch (err) {
         console.error('Failed to load user config', err);
       }
     };
-
+  
     loadUserConfig();
+  }, [currentUser]);
 
-    return () => {
-      mounted = false;
-    };
-  }, [currentUser, updateUserConfig]);
+  const onLanguageChange = async () => {
+    if (!userConfig) return;
+    try {
+      const newLanguage = userConfig.preferredLanguage === 'en' ? 'id' : 'en';
+      let updatedConfig = { ...userConfig, preferredLanguage: newLanguage };
+      updateUserConfig(updatedConfig);
+      await storeUserConfig(currentUser!.email!, updatedConfig);
+    } catch (err) {
+      console.error('Failed to update language preference', err);
+    }
+  }
+  
 
   const handleUserContext = () => {
     setUserMenuOpen(!isUserMenuOpen);
@@ -48,29 +50,22 @@ const Header: React.FC = () => {
 
   return (
     <header className="app-header">
-      <div className="header-left" onClick={() => window.location.href = '/'}>
+      <div className="header-left" onClick={() => navigate('/')}>
         <h1>ForePlan</h1>
       </div>
       
       <div className="header-right">
         
         {userConfig ? (
-          <>
-          <button className="toggle-button" onClick={onLanguageChange}>
+          <button className="app-toggle-button" onClick={onLanguageChange}>
               <span className="user-config">
-                  {userConfig.preferedLanguage.toUpperCase()}
+                  {userConfig.preferredLanguage.toUpperCase()}
               </span>
           </button>
-          <button className="toggle-button">
-              <span className="user-config">
-                  {userConfig.preferedUnits === 'metric' ? '°C' : '°F'}
-              </span>
-        </button>
-        </>
         ) : (null)}
 
         <button 
-            className="toggle-button" 
+            className="app-toggle-button" 
             onClick={toggleTheme}
             aria-label="Toggle theme"
             title={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
@@ -94,9 +89,9 @@ const Header: React.FC = () => {
             )}
         </button>
 
-        <button className="user-button">
+        <button className="app-button">
             {currentUser ? (
-                <span onClick={handleUserContext} className="sign-out-button" title="Sign Out">
+                <span onClick={handleUserContext} title="Sign Out">
                 {currentUser.displayName}
             </span>
             ) : (

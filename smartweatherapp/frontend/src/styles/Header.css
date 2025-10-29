@@ -40,58 +40,8 @@
   transition: color 0.3s ease;
 }
 
-.toggle-button {
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: 4px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.toggle-button:hover {
-  background: var(--accent);
-  color: var(--bg-primary);
-  border-color: var(--accent);
-  transform: scale(1.05);
-}
-
-.toggle-button:active {
-  transform: scale(0.95);
-}
-
-.toggle-button svg {
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-.toggle-button:hover svg {
-  transform: rotate(20deg);
-}
-
-.user-button {
-  background: var(--bg-tertiary);
-  border: 1px solid var(--border-color);
-  color: var(--text-primary);
-  padding: 4px 8px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
 @media(max-width: 720px) {
   .app-header {
     flex-direction: row;
-  }
-
-  .user-button {
-    display: none;
   }
 }
