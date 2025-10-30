@@ -75,8 +75,10 @@ jobs:
         # Copy executable
         Copy-Item "build\bin\${{ env.BUILD_TYPE }}\ForePlan.exe" $artifactDir\
         
-        # Copy web dist
-        Copy-Item -Path "build\bin\${{ env.BUILD_TYPE }}\foreplan" -Destination "$artifactDir\foreplan" -Recurse -Force
+        # Copy web assets
+        if (Test-Path "build\bin\${{ env.BUILD_TYPE }}\web") {
+          Copy-Item -Path "build\bin\${{ env.BUILD_TYPE }}\web" -Destination "$artifactDir\web" -Recurse -Force
+        }
         
         # Copy any DLLs if needed
         if (Test-Path "build\bin\${{ env.BUILD_TYPE }}\*.dll") {
