@@ -1,19 +1,19 @@
 # Linux application resources
 # Install .desktop file and icon for desktop environments
 
-set(APP_ICON_NAME "smartweatherapp")
-set(APP_DESKTOP_FILE "${CMAKE_CURRENT_LIST_DIR}/smartweatherapp.desktop.in")
+set(APP_ICON_NAME "foreplan")
+set(APP_DESKTOP_FILE "${CMAKE_CURRENT_LIST_DIR}/foreplan.desktop.in")
 set(APP_ICON_FILE "${CMAKE_CURRENT_LIST_DIR}/app_icon.png")
 
 # Configure the .desktop file with actual install paths
 configure_file(
     "${APP_DESKTOP_FILE}"
-    "${CMAKE_CURRENT_BINARY_DIR}/resources/linux/smartweatherapp.desktop"
+    "${CMAKE_CURRENT_BINARY_DIR}/resources/linux/foreplan.desktop"
     @ONLY
 )
 
 # Install the .desktop file to system applications directory
-install(FILES "${CMAKE_CURRENT_BINARY_DIR}/resources/linux/smartweatherapp.desktop"
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/resources/linux/foreplan.desktop"
     DESTINATION share/applications
 )
 

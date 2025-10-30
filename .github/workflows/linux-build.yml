@@ -41,14 +41,14 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install frontend dependencies
+      - name: Install web dependencies
         run: |
-          cd smartweatherapp/frontend
+          cd foreplan/web
           npm install
 
-      - name: Build frontend
+      - name: Build web
         run: |
-          cd smartweatherapp/frontend
+          cd foreplan/web
           npm run build
 
       - name: Configure CMake
@@ -62,7 +62,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: smartweatherapp-linux
+          name: foreplan-linux
           path: |
             build/bin/
             !build/bin/**/*.o

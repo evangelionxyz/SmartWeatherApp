@@ -1,10 +1,10 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=Smart Weather App
+Name=ForePlan
 Comment=Weather application built with C++ and React
-Exec=@CMAKE_INSTALL_PREFIX@/bin/SmartWeatherApp
-Icon=smartweatherapp
+Exec=@CMAKE_INSTALL_PREFIX@/bin/ForePlan
+Icon=ForePlan
 Terminal=false
 Categories=Utility;Weather;
 Keywords=weather;forecast;

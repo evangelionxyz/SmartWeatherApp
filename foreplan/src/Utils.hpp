@@ -19,7 +19,7 @@
     #include <unistd.h>
 #endif
 
-namespace smartweather::Utils
+namespace fp::Utils
 {
     inline std::string ReadFile(const std::filesystem::path& filepath)
     {

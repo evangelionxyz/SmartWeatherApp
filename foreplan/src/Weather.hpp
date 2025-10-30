@@ -5,7 +5,7 @@
 
 #include <string>
 
-namespace smartweather
+namespace fp
 {
     struct Weather
     {

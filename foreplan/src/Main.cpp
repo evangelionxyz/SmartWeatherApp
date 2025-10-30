@@ -19,7 +19,6 @@
 
 #include <webview/webview.h>
 
-
 #ifdef _WIN32
     #include <windows.h>
 #endif
@@ -44,7 +43,7 @@ int main(int argc, char **argv)
         // Note: WebKitGTK has different security policies than Chromium-based WebView2
         // File access and CORS are handled differently
 #endif
-        smartweather::FileWatcher fileWatcher;
+        fp::FileWatcher fileWatcher;
         
 #ifdef _DEBUG
         webview::webview w(true, nullptr);
@@ -55,7 +54,7 @@ int main(int argc, char **argv)
         w.set_title("ForePlan");
         w.set_size(1280, 820, WEBVIEW_HINT_NONE);
         
-        std::filesystem::path htmlPath = std::filesystem::current_path() / "smartweatherapp" / "dist" / "index.html";
+        std::filesystem::path htmlPath = std::filesystem::current_path() / "web" / "dist" / "index.html";
         if (false && std::filesystem::exists(htmlPath)) {
             std::string fileUrl = "file://" + htmlPath.string();
             w.navigate(fileUrl);

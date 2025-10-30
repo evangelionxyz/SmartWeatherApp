@@ -1,5 +1,5 @@
 {
-  "name": "frontend",
+  "name": "foreplan",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,14 +7,14 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:cpp": "tsc -b && vite build --outDir ../build/bin/smartweatherapp",
+    "build:cpp": "tsc -b && vite build --outDir ../build/bin/foreplan/web",
     "dev:cpp": "vite --host 0.0.0.0 --port 5173",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",
-    "firebase": "^12.4.0",
+    "firebase": "^12.5.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-router-dom": "^7.9.4"

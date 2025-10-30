@@ -1,5 +1,5 @@
 #!/bin/bash
-# Script to create a simple PNG icon for the Smart Weather App
+# Script to create a simple PNG icon for the ForePlan
 # This creates a 256x256 placeholder icon with ImageMagick
 # Replace this with your actual app icon
 

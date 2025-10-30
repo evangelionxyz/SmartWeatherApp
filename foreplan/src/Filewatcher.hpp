@@ -6,7 +6,7 @@
 #include <map>
 #include <filesystem>
 
-namespace smartweather
+namespace fp
 {
     class FileWatcher
     {

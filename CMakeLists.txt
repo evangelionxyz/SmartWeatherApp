@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(SmartWeatherApp VERSION 1.0 LANGUAGES CXX)
+project(ForePlan VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -50,4 +50,4 @@ set(JSON_Install OFF CACHE INTERNAL "")
 set(JSON_MultipleHeaders OFF CACHE INTERNAL "")
 add_subdirectory(${THIRDPARTY_DIR}/json EXCLUDE_FROM_ALL)
 
-add_subdirectory(smartweatherapp)
+add_subdirectory(foreplan)
