@@ -1,8 +1,5 @@
 build/
 
-# GitHub Actions local testing
 .secrets
 .env
-
-# Act runner cache
 .act/

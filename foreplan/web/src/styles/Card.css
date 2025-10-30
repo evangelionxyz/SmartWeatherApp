@@ -1,0 +1,25 @@
+.card-container {
+    background: var(--bg-secondary-alpha);
+    border-radius: 12px;
+    padding: 16px;
+    width: 100%;
+    max-width: 300px;
+    box-shadow: 0 4px 20px var(--shadow);
+    border: 1px solid var(--border-color);
+    animation: slideUp 0.5s ease-out;
+    will-change: height;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    .title {
+        font-size: 20px;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color);
+        text-align: center;
+        color: var(--text-primary);
+        margin-bottom: 12px;
+    }
+}

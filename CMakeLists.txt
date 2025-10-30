@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(SmartWeatherApp VERSION 1.0 LANGUAGES CXX)
+project(ForePlan VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -12,7 +12,8 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(THIRDPARTY_DIR ${CMAKE_CURRENT_SOURCE_DIR}/thirdparty)
 
 # CURL Options
-set(CURL_STATICLIB ON CACHE BOOL "Use static linking for CURL" FORCE)
+set(BUILD_STATIC_LIBS ON CACHE BOOL "Use static linking for CURL" FORCE)
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "Do not build CURL shared library" FORCE)
 set(BUILD_CURL_EXE OFF CACHE BOOL "Do not build CURL executable" FORCE)
 set(BUILD_CURL_DOCS OFF CACHE BOOL "Do not build CURL documentation" FORCE)
 set(BUILD_CURL_MANUAL OFF CACHE BOOL "Do not build CURL manual" FORCE)
@@ -42,6 +43,7 @@ set(WEBVIEW_BUILD_TESTS OFF CACHE BOOL "Disable webview tests" FORCE)
 set(WEBVIEW_BUILD_EXAMPLES OFF CACHE BOOL "Disable webview examples" FORCE)
 set(WEBVIEW_BUILD_DOCS OFF CACHE BOOL "Disable webview docs" FORCE)
 add_subdirectory(${THIRDPARTY_DIR}/webview)
+target_compile_definitions(webview_core_static PRIVATE _SILENCE_ALL_CXX23_DEPRECATION_WARNINGS _CXX23_DEPRECATE_ALIGNED_STORAGE)
 
 # JSON
 set(JSON_BuildTests OFF CACHE INTERNAL "")
@@ -49,4 +51,4 @@ set(JSON_Install OFF CACHE INTERNAL "")
 set(JSON_MultipleHeaders OFF CACHE INTERNAL "")
 add_subdirectory(${THIRDPARTY_DIR}/json EXCLUDE_FROM_ALL)
 
-add_subdirectory(smartweatherapp)
+add_subdirectory(foreplan)

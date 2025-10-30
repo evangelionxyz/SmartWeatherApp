@@ -1,4 +1,4 @@
-# SmartWeatherApp Build Instructions
+# ForePlan Build Instructions
 
 ## Prerequisites
 
@@ -39,15 +39,19 @@ sudo apt install nodejs -y
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/evangelionxyz/SmartWeatherApp.git
-cd SmartWeatherApp
+git clone https://github.com/evangelionxyz/ForePlan.git
+cd ForePlan
 ```
 
-### 2. Build Frontend
+### 2. Configure and Build Web
 
 ```bash
-cd smartweatherapp/frontend
+cd foreplan/web
 npm install
+
+sudo npm install firebase
+sudo npm install -g firebase-tools
+
 npm run build
 cd ../..
 ```
@@ -67,7 +71,7 @@ cmake --build build --config Release -j$(nproc)
 ### 5. Run the Application
 
 ```bash
-./build/bin/smartweatherapp
+./build/bin/foreplan
 ```
 
 ## WSL-Specific Notes
@@ -102,13 +106,13 @@ If you're using WSL and encounter "UNC paths are not supported" errors during `n
 ## Project Structure
 
 ```
-SmartWeatherApp/
+foreplan/
 ├── build/                  # CMake build directory (generated)
 │   └── bin/               # Compiled binaries
-├── smartweatherapp/
-│   ├── frontend/          # React/TypeScript frontend
-│   │   ├── src/          # Frontend source code
-│   │   └── dist/         # Built frontend (generated)
+├── foreplan/
+│   ├── web/          # React/TypeScript web
+│   │   ├── src/          # Web source code
+│   │   └── dist/         # Built web (generated)
 │   ├── src/              # C++ backend source
 │   └── resources/        # Platform-specific resources
 └── thirdparty/           # Third-party libraries
@@ -169,4 +173,4 @@ The project includes GitHub Actions workflows for automated builds:
 ## Support
 
 For issues and questions, please visit:
-- GitHub Issues: https://github.com/evangelionxyz/SmartWeatherApp/issues
+- GitHub Issues: https://github.com/evangelionxyz/ForePlan/issues
